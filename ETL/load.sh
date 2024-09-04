@@ -1,3 +1,5 @@
+#!/bin/bash
+
 load() {
     # Create a directory named "Gold" if it doesn't exist
     mkdir -p Gold

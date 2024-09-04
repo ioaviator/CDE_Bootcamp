@@ -1,3 +1,5 @@
+#!/bin/bash
+
 transform() {
 
 		# Create the Transformed directory if it doesn't exist
