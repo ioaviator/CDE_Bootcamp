@@ -52,7 +52,3 @@ transform() {
         echo "Error: File was not created."
     fi
 }
-
-
-# Call the transform function
-transform

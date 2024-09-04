@@ -23,5 +23,3 @@ extract() {
     fi 
 }
 
-# Call the function
-extract

@@ -12,5 +12,3 @@ load() {
         echo "Failed to load the file into 'Gold' directory."
     fi
 }
-
-load
