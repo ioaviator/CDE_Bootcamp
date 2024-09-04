@@ -10,12 +10,17 @@ extract() {
         
     mkdir -p $DIR_PATH  # Create the 'raw' folder if it doesn't exist
 
-
-    # Download the file and save it in the 'raw' folder
-    curl -o raw/$OUTPUT_FILE $FILE_URL
-
-    echo "File saved in the $DIR_PATH folder as $OUTPUT_FILE"
-    
+    if [ -f "$DIR_PATH/$OUTPUT_FILE" ]; then
+        echo "Expected file $OUTPUT_FILE already exists in $DIR_PATH directory"
+    else
+        curl -o $DIR_PATH/$OUTPUT_FILE $FILE_URL
+        # Check if the directory is not empty and contains the specific file
+        if [ "$(ls -A "$DIR_PATH")" ] && [ -f "$DIR_PATH/$OUTPUT_FILE" ]; then
+            echo "$OUTPUT_FILE saved successfully to $DIR_PATH directory" 
+        else
+            echo "Error downloading file...."
+        fi
+    fi 
 }
 
 # Call the function
