@@ -2,15 +2,14 @@
 
 transform() {
 
-		# Create the Transformed directory if it doesn't exist
-    TRANSFORM_DIR=Transformed
-		mkdir -p $TRANSFORM_DIR
+	# Create the Transformed directory if it doesn't exist
+    mkdir -p $TRANSFORM_DIR
 
     # Use awk with an FS that handles quoted commas
     awk '
     BEGIN {
-        FS = ","                      # Set the field separator to comma
-        OFS = ","                     # Set the output field separator to comma
+        FS = ","    # Set the field separator to comma
+        OFS = ","   # Set the output field separator to comma
     }
     # NR==1 First row of the dataset
     NR == 1 {
@@ -23,7 +22,8 @@ transform() {
             else if (header == "units") units_idx = i
             else if (header == "variable_code") variable_code_idx = i
         }
-        # Print the new header with selected columns
+        
+        # Print the new column headers with selected columns
         print "year", "value", "units", "variable_code"
     }
 
@@ -45,11 +45,11 @@ transform() {
         # Print the selected columns, ensuring they remain properly separated
         print year, value, units, variable_code
     }
-    ' raw/annual-enterprise-survey-2023-fin-yr-provisional.csv > Transformed/2023_year_finance.csv
+    ' $RAW_DIR_PATH/annual-enterprise-survey-2023-fin-yr-provisional.csv > $TRANSFORM_DIR/2023_year_finance.csv
 
     # Confirm the file is created
     if [ -f $TRANSFORM_DIR/2023_year_finance.csv ]; then
-        echo "File successfully created in $TRANSFORM_DIR/2023_year_finance.csv"
+        echo "File successfully loaded into $TRANSFORM_DIR directory"
     else
         echo "Error: File was not created."
     fi
