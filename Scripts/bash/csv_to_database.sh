@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./source.env
+source ./config.env
 
 # Directory containing the CSV files
 CSV_DIR="$(pwd)/parch_posey"
