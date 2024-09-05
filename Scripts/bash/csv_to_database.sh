@@ -1,14 +1,9 @@
 #!/bin/bash
 
-# Database credentials
-DB_NAME="posey"
-DB_USER="postgres"
-# DB_PASSWORD="1234"
-DB_HOST="127.0.0.1"
-DB_PORT="5432"
+source ./config.env
 
 # Directory containing the CSV files
-CSV_DIR="$(pwd)/posey"
+CSV_DIR="$(pwd)/parch_posey"
 
 # Function to infer the data type of a column
 infer_data_type() {

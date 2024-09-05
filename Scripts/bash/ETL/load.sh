@@ -1,16 +1,17 @@
 #!/bin/bash
 
+
 load() {
     # Create a directory named "Gold" if it doesn't exist
-    mkdir -p Gold
+    mkdir -p $GOLD_DIR
 
     # Move the transformed file to the Gold directory
-    mv Transformed/2023_year_finance.csv Gold/
+    mv $TRANSFORM_DIR/2023_year_finance.csv $GOLD_DIR/
 
     # Confirm that the file has been saved into the Gold directory
-    if [ -f "Gold/2023_year_finance.csv" ]; then
-        echo "File successfully loaded into 'Gold' directory."
+    if [ -f "$GOLD_DIR/2023_year_finance.csv" ]; then
+        echo "File successfully loaded into $GOLD_DIR directory"
     else
-        echo "Failed to load the file into 'Gold' directory."
+        echo "Failed to load file into $GOLD_DIR directory"
     fi
 }

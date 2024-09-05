@@ -1,4 +1,5 @@
 #!/bin/bash
+source ./config.env
 
 # Import the extract, transform, and load functions from separate script files
 source ./ETL/extract.sh
