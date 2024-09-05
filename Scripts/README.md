@@ -57,6 +57,21 @@ DB_PORT=5432
 chmod +x ETL/*
 chmod +x main.sh
 ```
+### Schedule Cron Job
+  From terminal, type 
+  
+  ```
+  $(pwd)
+  ```
+  This will geenrate the path to the current working directory
+
+- Open the cron scheduler in the terminal `crontab -e`
+- Add the following line to schedule the main.sh script to run every day at 12:00 AM
+
+```
+0 0 * * * /path/to/your/main.sh
+```
+- Save and exit the cron editor
 - Run the script `bash main.sh`
 
 ## CAVEATS
