@@ -46,3 +46,36 @@ model (Any degree of abstraction is okay)
 
 -----------------------
 
+## Entities
+- Order: Order Request made by customers 
+- Customer: The customer who made the request
+- Branch: The restauranyt branch where the order was made
+- Menu: The food items in the restaurants' menu
+- Payment_Method: The mode of payment used by the customer to make payment
+- Date: The date the order was made
+
+------------------------------------
+
+### Business Process
+- Customers' Order
+
+### Business Question
+- What is the total quantity demanded
+- What is the profit generated
+- What is the most used payment method
+- What is the customers' favorite dish
+- Which order type was most utilized by customers
+
+### Dimension
+- Customer
+- Branch
+- Payment_Method
+- Date
+- Menu
+
+### Fact
+- Order
+
+## Data Modelling
+![restaurant data modelling](./fufu_data_modelling.png)
+
