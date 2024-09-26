@@ -7,3 +7,5 @@ error.log
 Scripts/bash/parch_posey*
 config.env
 venv
+logs
+profiles.yml
