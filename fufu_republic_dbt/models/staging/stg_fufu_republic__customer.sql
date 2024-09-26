@@ -10,7 +10,7 @@ source as (
 customer as (
 
     select
-        customer_id,
+        cust_id as customer_id,
         first_name,
         last_name,
         email

@@ -15,7 +15,7 @@ def customer(rows):
 
     data = {
       'cust_id': cust_id,
-      'firstname': first_name,
+      'first_name': first_name,
       'last_name': last_name,
       # 'phone_number': number,
       'email': f'{first_name}.{last_name}@{fake.free_email_domain()}'

@@ -1,10 +1,6 @@
-# Core Data Engineers Bootcamp
+## Fufu Republic: Data Loading and Transformation Using DBT
 
-#### This repository contains all the tasks, assignments, and projects completed during my participation in the Core Data Engineers Bootcamp. The bootcamp covers essential data engineering concepts and tools, including programming, data pipelines, ETL processes, cloud services, infrastructure tools and database management. 
-#### Each branch in this repository corresponds to a specific module or project, showcasing my progress and learning journey in data engineering.
+### This task is based off the [SQL](https://github.com/ioaviator/CDE_Bootcamp/tree/sql) data modelling submission.
 
-### Click on the below links for each specific project
+This task requires using DBT to perform data loading into a data warehouse and performing transformation
 
-- [Linux](./Scripts)
-- [SQL](https://github.com/ioaviator/CDE_Bootcamp/tree/sql)
-- [DBT](https://github.com/ioaviator/CDE_Bootcamp/tree/dbt)
