@@ -47,10 +47,10 @@ model (Any degree of abstraction is okay)
 -----------------------
 
 ## Entities
-- Order: Order Request made by customers 
+- Order: Order Request made by customers.(dine-in, take-out, online)
 - Customer: The customer who made the request
-- Branch: The restauranyt branch where the order was made
-- Menu: The food items in the restaurants' menu
+- Branch: The restaurant branch where the order was made
+- Menu: The food items in the restaurants'
 - Payment_Method: The mode of payment used by the customer to make payment
 - Date: The date the order was made
 
