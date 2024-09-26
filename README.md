@@ -41,7 +41,7 @@ model (Any degree of abstraction is okay)
 
 **Fufu Republic Branch Outlets**
 
-![restaurant Branches](../Fufu_Republic_Restaurant.png)
+![restaurant Branches](./SQL/Fufu_Republic_Restaurant.png)
 
 
 -----------------------
@@ -77,5 +77,5 @@ model (Any degree of abstraction is okay)
 - Order
 
 ## Data Modelling
-![restaurant data modelling](../fufu_data_modelling.png)
+![restaurant data modelling](./SQL/fufu_data_modelling.png)
 
