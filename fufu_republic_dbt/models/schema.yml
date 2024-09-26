@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: fufu_republic
+    database: fufu_republic  
+    schema: public  
+    tables:
+      - name: branch
+      - name: customer
+      - name: date_of_order
+      - name: food_menu
+      - name: order
+      - name: payment_method
+
+  
