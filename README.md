@@ -5,6 +5,6 @@
 
 ### Click on the below links for each specific project
 
-- [Linux](./Scripts)
+- [Linux](https://github.com/ioaviator/CDE_Bootcamp/tree/linux)
 - [SQL](https://github.com/ioaviator/CDE_Bootcamp/tree/sql)
 - [DBT](https://github.com/ioaviator/CDE_Bootcamp/tree/dbt)
