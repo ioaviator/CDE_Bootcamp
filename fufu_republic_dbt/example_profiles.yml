@@ -1,0 +1,12 @@
+fufu_republic_dbt:
+  outputs:
+    dev:
+      dbname: db_name
+      host: localhost
+      pass: 'password'
+      port: db_port_number
+      schema: public
+      threads: 3
+      type: postgres
+      user: postgres
+  target: dev
