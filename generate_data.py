@@ -132,7 +132,7 @@ def save_as_csv(data, filename):
     writer.writerows(data)
 
 
-save_as_csv(customer_, './fufu_republic_dbt/seeds/customers.csv')
+save_as_csv(customer_, './fufu_republic_dbt/seeds/customer.csv')
 save_as_csv(branch_,'./fufu_republic_dbt/seeds/branch.csv')
 save_as_csv(payment_method_, './fufu_republic_dbt/seeds/payment_method.csv')
 save_as_csv(food_menu_, './fufu_republic_dbt/seeds/food_menu.csv')
