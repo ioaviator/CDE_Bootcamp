@@ -8,16 +8,16 @@ def customer(rows):
   customer = []
 
   for _ in range(rows):
-    cust_id = fake.uuid4()[:8]
+    cust_id = f'{fake.uuid4()[:6]}{fake.msisdn()[:3]}'
     first_name = fake.first_name()
     last_name = fake.last_name()
-    number = f'+234{fake.msisdn()[4:]}'
+    # number = f'+234{str(fake.msisdn()[4:])}'
 
     data = {
       'cust_id': cust_id,
       'firstname': first_name,
       'last_name': last_name,
-      'phone_number': number,
+      # 'phone_number': number,
       'email': f'{first_name}.{last_name}@{fake.free_email_domain()}'
     }
     
@@ -33,7 +33,7 @@ def food_menu(rows):
   for _ in range(rows):
 
     data = {
-      'menu_id': fake.msisdn(),
+      'menu_id': fake.msisdn()[:4],
       'item': choice(food_menu),
       'category': choice(category),
       'price': f'{fake.pricetag()[1]}{fake.pricetag()[-2:]}'
@@ -95,7 +95,7 @@ def order(cust_id, branch_id, menu_ids, payment_ids,date, quantity):
 
   for _ in range(300):
     data = {
-      'order_id': f'{fake.uuid4()[:3]}{fake.msisdn()[:4]}',
+      'order_id': f'{fake.uuid4()[:2]}{fake.msisdn()[:2]}',
       'branch_id': choice(branch_id),
       'customer_id': choice(cust_id),
       'menu_id': choice(menu_ids),
