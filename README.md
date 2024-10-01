@@ -85,6 +85,8 @@ Write a script that performs an ETL process
 
 - Load: Load the transformed data into a directory named Gold. Also, confirm that the file has been saved into the folder.
 
+- Schedule the script to run daily at 12:00 A.M using cron jobs
+
 ## ETL Using Bash Script
 ![etl_bash](./Scripts/_img/cronjob_task.gif)
 
