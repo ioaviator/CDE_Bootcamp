@@ -15,6 +15,9 @@ Data Transformation: Utilizing bash scripts to extract specific columns
 Data Integration: Loading data into PostgreSQL database for structured querying and analysis. 
 Moving data from one directory to another
 
+## Task
+A script to move all CSV and JSON files from one directory to another directory named json_and_csv. This script should be able to work with one or more json and csv files
+
 ## Move Data From Source To Destination
 ![mv_src_to_dest](./Scripts/_img/src_2_dest.gif)
 
@@ -43,7 +46,7 @@ ERROR_LOG=error.log
 ```
 chmod +x move_files.sh
 ```
-- Run the file
+- Run the script
 ```
 ./move_files.sh
 ```
@@ -73,8 +76,67 @@ Rerun
 ```
 <br>
 
-## Extract Data From Local Storage to PostgreSQL 
+## Task
+Write a script that performs an ETL process
 
+- Extract: [Download](https://www.stats.govt.nz/assets/Uploads/Annual-enterprise-survey/Annual-enterprise-survey-2023-financial-year-provisional/Download-data/annual-enterprise-survey-2023-financial-year-provisional.csv) a CSV file using bash script. Save it into a folder called raw. The script should confirm that the file has been saved into the raw folder.
+
+- Transform: Once downloaded, perform a simple transformation by renaming the column named Variable_code to variable_code. Then, select only the following columns: year, Value, Units, variable_code. Save the content of these selected columns into a file named 2023_year_finance.csv. This file should be saved in a folder called Transformed. The script should confirm that the file is loaded into the folder.
+
+- Load: Load the transformed data into a directory named Gold. Also, confirm that the file has been saved into the folder.
+
+## ELT Using Bash Script
+![etl_bash](./Scripts/_img/cronjob_task.gif)
+
+## Usage
+- Navigate into the Scripts/bash directory `cd Scripts/bash`
+- Inside config.env, create these .env variables
+
+```
+RAW_DIR_PATH=raw
+OUTPUT_FILE=annual-enterprise-survey-2023-fin-yr-provisional.csv
+FILE_URL=URL_OF_DATA_TO_EXTRACT
+
+TRANSFORM_DIR=Transformed
+GOLD_DIR=Gold
+```
+
+- Grant permission to the scripts 
+
+```
+chmod +x main.sh
+chmod +x ETL/*
+```
+- Run the script
+```
+./main.sh
+```
+
+
+## Schedule Cron Job
+
+From terminal, type 
+
+  ```
+  $(pwd)
+  ```
+  This will geenrate the path to the current working directory
+
+- Open the cron scheduler in the terminal using `crontab -e`
+- Add the following line to schedule the main.sh script to run every day at **12:00 AM**
+
+```
+0 0 * * * /path/to/your/main.sh
+```
+- Save and exit the cron editor
+- Run the script `./main.sh`
+
+------------------------------
+
+## Task
+Write a Bash script that iterates over csv files in a directory and copies each of the CSV files into a PostgreSQL database (name the database posey).
+
+## Extract Data From Local Storage to PostgreSQL 
 ![csv_to_postgres](./Scripts/_img/bash_pipeline.gif)
 
 
@@ -91,17 +153,15 @@ DB_HOST=127.0.0.1
 DB_PORT=5432
 ```
 
-- Grant permission to the scripts 
+- Grant permission to the script 
 
 ```
 chmod +x csv_to_database.sh
 ```
-- Run the file
+- Run the script
 ```
 ./csv_to_database.sh
 ```
-
-
 ### Running SQL Scripts
 - Navigate to sql directory
 - The directory contains a .sql file which contains SQL queries
