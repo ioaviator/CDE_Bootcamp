@@ -15,6 +15,8 @@ Data Transformation: Utilizing bash scripts to extract specific columns
 Data Intergration: Loading data into PostgreSQL database for structured querying and analysis. 
 Moving data from one directory to another
 
+![csv_to_postgres](./Scripts/_img/bash_pipeline.gif)
+
 ### Usage
 - Fork the repository
 - Clone the repository to your local environment.  `git clone https://repo-url`
