@@ -85,7 +85,7 @@ Write a script that performs an ETL process
 
 - Load: Load the transformed data into a directory named Gold. Also, confirm that the file has been saved into the folder.
 
-## ELT Using Bash Script
+## ETL Using Bash Script
 ![etl_bash](./Scripts/_img/cronjob_task.gif)
 
 ## Usage
