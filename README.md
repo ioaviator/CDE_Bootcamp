@@ -10,14 +10,26 @@ This task requires the usage of DBT to perform data loading into a data warehous
 - DBT
 - PostgreSQL
 
+### Pipeline Architecture
+--------------------------
+![pipeline architecture](./img_/dbt_modelling.gif)
+
+<br>
+
 ## Usage
+
 - Clone repository 
   ```
   git clone repo-url
   cd cloned_repo
   ```
-- Set up virtual environment and activate
 
+- Checkout dbt branch
+  ```
+  git checkout dbt
+  ```
+
+- Set up virtual environment and activate
   ```
   python -m venv venv
   
