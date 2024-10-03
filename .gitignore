@@ -1,12 +1,1 @@
-Scripts/bash/Raw*
-Scripts/bash/Transformed*
-Scripts/bash/Gold*
-Scripts/bash/json_and_csv*
-Scripts/bash/json_csv_raw*
-error.log
-Scripts/bash/parch_posey*
-config.env
-venv
-logs
-profiles.yml
-.vscode
+test.readme
