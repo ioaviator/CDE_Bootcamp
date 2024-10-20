@@ -5,6 +5,7 @@ from airflow.operators.bash import BashOperator
 import requests
 import gzip
 
+
 BASE_URL="https://dumps.wikimedia.org/other/pageviews/2024/2024-10/"
 FILE="pageviews-20241014-050000.gz"
 
@@ -14,6 +15,18 @@ def download_file(url, location):
   with open(location, 'wb') as f:
     f.write(response.content)
   return location
+
+def process(filepath):
+  cmds = []
+  companies = ["Amazon", "Apple", "Facebook", "Google", "Microsoft"]
+  with open(filepath, 'rb') as f:
+    for line in f:
+      for company in companies:
+        if(company in line.decode('utf-8') ):
+          views = line.decode().strip().split(" ")[-2]
+          cmds.append(f"INSERT INTO pageviews (company, views) VALUES ('{company}', {views});")
+  return cmds
+
 
 
 with DAG(
@@ -33,8 +46,14 @@ with DAG(
 
   extract = BashOperator(
     task_id='extract_views',
-    bash_command='gzip -d {{ task_instance.xcom_pull(task_ids="download_views") }}'
+    bash_command='gzip -dv {{ task_instance.xcom_pull(task_ids="download_views") }}'
   )
 
+  process = PythonOperator(
+    task_id='process_views',
+    python_callable=process,
+    op_kwargs={'filepath': '/tmp/' + FILE.replace('.gz', '')},
+    do_xcom_push=True
+  )
 
-download >> extract
+download >> extract >> process 
