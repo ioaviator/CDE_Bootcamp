@@ -43,6 +43,14 @@ def create_table():
     with engine.connect() as connection:
       connection.execute(create_table_sql)
 
+def load_to_db(cmds):
+  import json
+  cmd_ = json.loads(cmds)
+  
+  with engine.connect() as conn:
+    for cmd in cmd_:
+      conn.execute(cmd)
+
 
 
 with DAG(
@@ -76,6 +84,10 @@ create_table = PythonOperator(
   python_callable=create_table,
 )
 
+load = PythonOperator(
+  task_id='load_to_db',
+  python_callable=load_to_db,
+  op_kwargs={'cmds': '{{ task_instance.xcom_pull(task_ids="process_views") }}'},
+)
 
-
-download >> extract >> process >> create_table
+download >> extract >> process >> create_table >> load
