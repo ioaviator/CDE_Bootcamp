@@ -4,7 +4,6 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 import requests
 import gzip
-import os
 
 BASE_URL="https://dumps.wikimedia.org/other/pageviews/2024/2024-10/"
 FILE="pageviews-20241014-050000.gz"
@@ -32,5 +31,10 @@ with DAG(
 
   )
 
+  extract = BashOperator(
+    task_id='extract_views',
+    bash_command='gzip -d {{ task_instance.xcom_pull(task_ids="download_views") }}'
+  )
 
-download
+
+download >> extract
