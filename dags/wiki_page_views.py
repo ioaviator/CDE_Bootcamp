@@ -4,6 +4,7 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 import requests
 import gzip
+from sqlalchemy import create_engine
 
 
 BASE_URL="https://dumps.wikimedia.org/other/pageviews/2024/2024-10/"
@@ -26,6 +27,21 @@ def process(filepath):
           views = line.decode().strip().split(" ")[-2]
           cmds.append(f"INSERT INTO pageviews (company, views) VALUES ('{company}', {views});")
   return cmds
+
+db_uri = 'sqlite:///airflow.db'
+engine = create_engine(db_uri)
+
+def create_table():
+    # SQL statement to create the pageviews table
+    create_table_sql = """
+    CREATE TABLE IF NOT EXISTS pageviews (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        company TEXT NOT NULL,
+        views INTEGER NOT NULL
+    );
+    """
+    with engine.connect() as connection:
+      connection.execute(create_table_sql)
 
 
 
@@ -55,5 +71,11 @@ with DAG(
     op_kwargs={'filepath': '/tmp/' + FILE.replace('.gz', '')},
     do_xcom_push=True
   )
+create_table = PythonOperator(
+  task_id='create_table',
+  python_callable=create_table,
+)
 
-download >> extract >> process 
+
+
+download >> extract >> process >> create_table
