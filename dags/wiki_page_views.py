@@ -54,8 +54,8 @@ def load_to_db(cmds):
 
 
 with DAG(
-  dag_id='wiki_page_views',
-  start_date=datetime(2024,10,18),
+  dag_id='CoreSentiment',
+  start_date=datetime(2024,10,19),
   schedule_interval="@hourly",
   catchup=False
 ) as dag:
@@ -65,7 +65,6 @@ with DAG(
     python_callable=download_file,
     op_kwargs={'url': f"{BASE_URL}{FILE}", 'location': f"/tmp/{FILE}"},
     do_xcom_push=True
-
   )
 
   extract = BashOperator(
@@ -79,15 +78,16 @@ with DAG(
     op_kwargs={'filepath': '/tmp/' + FILE.replace('.gz', '')},
     do_xcom_push=True
   )
-create_table = PythonOperator(
-  task_id='create_table',
-  python_callable=create_table,
-)
+  
+  create_table = PythonOperator(
+    task_id='create_table',
+    python_callable=create_table,
+  )
 
-load = PythonOperator(
-  task_id='load_to_db',
-  python_callable=load_to_db,
-  op_kwargs={'cmds': '{{ task_instance.xcom_pull(task_ids="process_views") }}'},
-)
+  load = PythonOperator(
+    task_id='load_to_db',
+    python_callable=load_to_db,
+    op_kwargs={'cmds': '{{ task_instance.xcom_pull(task_ids="process_views") }}'},
+  )
 
 download >> extract >> process >> create_table >> load
