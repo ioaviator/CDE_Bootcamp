@@ -6,27 +6,14 @@ import requests
 import gzip
 from sqlalchemy import create_engine
 
+from includes.load_to_db import load_to_db
+from includes.download_file import download_file
+from includes.process_file import process_file
+
 
 BASE_URL="https://dumps.wikimedia.org/other/pageviews/2024/2024-10/"
 FILE="pageviews-20241014-050000.gz"
 
-
-def download_file(url, location):
-  response = requests.get(url)
-  with open(location, 'wb') as f:
-    f.write(response.content)
-  return location
-
-def process(filepath):
-  cmds = []
-  companies = ["Amazon", "Apple", "Facebook", "Google", "Microsoft"]
-  with open(filepath, 'rb') as f:
-    for line in f:
-      for company in companies:
-        if(company in line.decode('utf-8') ):
-          views = line.decode().strip().split(" ")[-2]
-          cmds.append(f"INSERT INTO pageviews (company, views) VALUES ('{company}', {views});")
-  return cmds
 
 db_uri = 'sqlite:///airflow.db'
 engine = create_engine(db_uri)
@@ -43,13 +30,7 @@ def create_table():
     with engine.connect() as connection:
       connection.execute(create_table_sql)
 
-def load_to_db(cmds):
-  import json
-  cmd_ = json.loads(cmds)
-  
-  with engine.connect() as conn:
-    for cmd in cmd_:
-      conn.execute(cmd)
+
 
 
 
