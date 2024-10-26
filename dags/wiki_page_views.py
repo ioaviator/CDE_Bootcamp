@@ -2,35 +2,14 @@ from airflow import DAG
 from datetime import datetime
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
-import requests
-import gzip
-from sqlalchemy import create_engine
 
 from includes.load_to_db import load_to_db
 from includes.download_file import download_file
 from includes.process_file import process_file
-
+from includes.create_table import create_table
 
 BASE_URL="https://dumps.wikimedia.org/other/pageviews/2024/2024-10/"
 FILE="pageviews-20241014-050000.gz"
-
-
-db_uri = 'sqlite:///airflow.db'
-engine = create_engine(db_uri)
-
-def create_table():
-    # SQL statement to create the pageviews table
-    create_table_sql = """
-    CREATE TABLE IF NOT EXISTS pageviews (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        company TEXT NOT NULL,
-        views INTEGER NOT NULL
-    );
-    """
-    with engine.connect() as connection:
-      connection.execute(create_table_sql)
-
-
 
 
 
@@ -55,7 +34,7 @@ with DAG(
 
   process = PythonOperator(
     task_id='process_views',
-    python_callable=process,
+    python_callable=process_file,
     op_kwargs={'filepath': '/tmp/' + FILE.replace('.gz', '')},
     do_xcom_push=True
   )
