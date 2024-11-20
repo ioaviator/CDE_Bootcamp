@@ -1,0 +1,57 @@
+name: Data Pipeline
+on:
+  push:
+    branches:
+      - project
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Build and push image'
+        run: |
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cde_project:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cde_project:latest
+
+  Terraform:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    name: 'terraform-resources'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.REGISTRY_USERNAME }}
+      ARM_CLIENT_SECRET: ${{ secrets.REGISTRY_PASSWORD }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: 'Terraform init'
+        id: init
+        run: |
+          cd _terraform
+          terraform init          
+
+      - name: 'Terraform plan'
+        id: plan
+        run: |
+          cd _terraform
+          terraform plan
+                    
+      - name: 'Terraform apply'
+        id: apply
+        run: |
+          cd _terraform
+          terraform apply -auto-approve 
