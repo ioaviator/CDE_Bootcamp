@@ -10,4 +10,6 @@ webserver_config.py
 airflow.cfg
 airflow.db
 tests
+.terraform*
 plugins
+credentials.txt
