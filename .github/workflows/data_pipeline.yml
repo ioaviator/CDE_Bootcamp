@@ -41,17 +41,17 @@ jobs:
       - name: 'Terraform init'
         id: init
         run: |
-          cd _terraform
+          cd terraform
           terraform init          
 
       - name: 'Terraform plan'
         id: plan
         run: |
-          cd _terraform
+          cd terraform
           terraform plan
                     
       - name: 'Terraform apply'
         id: apply
         run: |
-          cd _terraform
+          cd terraform
           terraform apply -auto-approve 
