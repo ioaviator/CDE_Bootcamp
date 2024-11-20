@@ -27,5 +27,5 @@ jobs:
 
       - name: Lint with black
         run: |
-          black include .include/helpers 
+          black include/* include/helpers 
           black include/scripts dags
