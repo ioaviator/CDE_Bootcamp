@@ -22,10 +22,10 @@ jobs:
 
       - name: Sort using isort
         run: |
-          isort .include/* --check --diff
-          isort .dags/* --check --diff
+          isort include/* --check --diff
+          isort dags/* --check --diff
 
       - name: Lint with black
         run: |
-          black .include .include/helpers 
-          black .include/scripts dags
+          black include .include/helpers 
+          black include/scripts dags
