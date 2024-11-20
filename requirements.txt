@@ -1,0 +1,7 @@
+pandas
+adlfs==2024.7.0
+fsspec==2024.10.0
+azure-storage-blob==12.24.0
+apache-airflow-providers-postgres 
+astronomer-cosmos
+python-dotenv==1.0.1 
