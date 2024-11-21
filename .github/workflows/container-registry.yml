@@ -1,4 +1,4 @@
-name: Data Pipeline
+name: Container Registry
 on:
   push:
     branches:

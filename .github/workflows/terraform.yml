@@ -1,4 +1,4 @@
-name: Data Pipeline
+name: Terraform Resource
 on:
   push:
     branches:
