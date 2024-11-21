@@ -14,3 +14,4 @@ tests
 .terraform*
 plugins
 credentials.txt
+test.tf
