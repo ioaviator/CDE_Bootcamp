@@ -9,7 +9,7 @@ def load_to_data_lake(data):
 
   # Define your Azure Blob Storage account details
   container_name = 'raw'
-  blob_name = 'test.parquet'
+  blob_name = 'countries_api.parquet'
 
   # Convert your pandas dataframe to a CSV string
   parquet = data_df.to_parquet(index=False)
