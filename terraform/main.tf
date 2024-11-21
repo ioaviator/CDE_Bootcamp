@@ -25,3 +25,10 @@ resource "azurerm_storage_container" "cleanstoragecontainer" {
   container_access_type = "private"
 }
 
+
+resource "azurerm_container_registry" "cdeacr" {
+  name                = "cdeContainerRegistry22"
+  resource_group_name = azurerm_resource_group.cderesource.name
+  location            = azurerm_resource_group.cderesource.location
+  sku                 = "Basic"
+}
