@@ -1,7 +1,7 @@
 
 variable "resource_group_name" {
   description = "resource group container for all deployed azure services"
-  default     = "cde_resource"
+  default     = "cde_de_resource"
 }
 
 variable "location" {
