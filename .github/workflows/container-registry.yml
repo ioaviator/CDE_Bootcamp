@@ -2,7 +2,7 @@ name: Container Registry
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ['terraform']
+    workflows: ['Terraform Resource']
     types: [completed]
 
 jobs:
