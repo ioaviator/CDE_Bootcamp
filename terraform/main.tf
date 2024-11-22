@@ -148,14 +148,14 @@ resource "azurerm_postgresql_flexible_server" "cdepgserver" {
 
 }
 
-resource "azurerm_postgresql_flexible_server_database" "example" {
-  name      = "exampledb"
-  server_id = azurerm_postgresql_flexible_server.example.id
+resource "azurerm_postgresql_flexible_server_database" "cdepgdb" {
+  name      = "cdepgdb22"
+  server_id = azurerm_postgresql_flexible_server.cdepgserver.id
   collation = "en_US.utf8"
   charset   = "utf8"
 
   # prevent the possibility of accidental data loss
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
