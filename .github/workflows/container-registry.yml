@@ -1,9 +1,9 @@
 name: Container Registry
 on:
-  push:
-    branches:
-      - project
   workflow_dispatch:
+  workflow_run:
+    workflows: ['terraform']
+    types: [completed]
 
 jobs:
   build-and-push:
