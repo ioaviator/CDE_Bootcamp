@@ -5,6 +5,12 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import PythonOperator
+from airflow.providers.microsoft.azure.operators.data_factory import (
+    AzureDataFactoryRunPipelineOperator,
+)
+from airflow.providers.microsoft.azure.sensors.data_factory import (
+    AzureDataFactoryPipelineRunStatusSensor,
+)
 
 from include.api_connect import connect_to_api
 from include.country_info_to_data_lake import country_info_to_datalake
@@ -27,6 +33,9 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'schedule_interval': '@hourly',
+    "azure_data_factory_conn_id": "azure_data_factory",
+    "factory_name": "cdedatafactory22",
+    "resource_group_name": "cde_resource"  
 }
 
 with DAG(dag_id='countries_api', 
@@ -68,13 +77,18 @@ with DAG(dag_id='countries_api',
     provide_context=True
   )
 
+  data_factory = AzureDataFactoryRunPipelineOperator(
+        task_id="run_data_factory",
+        pipeline_name="df_pipeline",
+  )
+
 
   ( start_task 
   >> api_connect 
   >> load_2_data_lake 
   >> transform_data
   >> [language_2_data_lake, country_info_2_data_lake]
-  >>  end_task
+  >>  data_factory >> end_task
   )
   
 
