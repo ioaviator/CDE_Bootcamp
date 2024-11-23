@@ -1,19 +1,8 @@
 
-data "azurerm_storage_account" "storageaccountdata" {
-  name                = "cdedestorage"
-  resource_group_name = var.resource_group_name
-}
-
-resource "azurerm_data_factory_linked_service_azure_blob_storage" "cdeblobstoragels" {
-  name              = "cde_blob_ls"
-  data_factory_id   = var.data_factory_id
-  connection_string = data.azurerm_storage_account.storageaccountdata.primary_connection_string
-}
-
 resource "azurerm_data_factory_dataset_delimited_text" "cdebloblangds" {
   name                = "cde_blob_lang_ds"
   data_factory_id     = var.data_factory_id
-  linked_service_name = azurerm_data_factory_linked_service_azure_blob_storage.cdeblobstoragels.name
+  linked_service_name = var.linked_service_name
 
   column_delimiter    = ","
   row_delimiter       = "NEW"
@@ -32,7 +21,7 @@ resource "azurerm_data_factory_dataset_delimited_text" "cdebloblangds" {
 resource "azurerm_data_factory_dataset_delimited_text" "cdeblobcountriesds" {
   name                = "cde_blob_countries_ds"
   data_factory_id     = var.data_factory_id
-  linked_service_name = azurerm_data_factory_linked_service_azure_blob_storage.cdeblobstoragels.name
+  linked_service_name = var.linked_service_name
 
   column_delimiter    = ","
   row_delimiter       = "NEW"

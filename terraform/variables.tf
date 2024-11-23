@@ -8,3 +8,7 @@ variable "location" {
   default = "South Africa North"
 }
 
+variable "storage_account_name" {
+  default = "cdedestorage"
+}
+
