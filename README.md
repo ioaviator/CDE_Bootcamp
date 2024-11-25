@@ -1,4 +1,4 @@
-## Please allow till sunday, Many things went wrong with cloud service authentication
+## Work in progress
 
 ## Backgroud Story
 
@@ -68,4 +68,4 @@ URL="url-to-parquet-file-stored-in-cloud-storage"
 
 ![Data Architecture](./_img/cde_project.gif)
 
-## Work in progress, please allow till sunday
+## Work in progress, 
