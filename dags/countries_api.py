@@ -4,15 +4,12 @@ from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
+from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.microsoft.azure.operators.data_factory import (
     AzureDataFactoryRunPipelineOperator,
 )
-from airflow.providers.microsoft.azure.sensors.data_factory import (
-    AzureDataFactoryPipelineRunStatusSensor,
-)
 from cosmos import DbtDag, DbtTaskGroup, ExecutionConfig, ProfileConfig, ProjectConfig
-from cosmos.profiles import PostgresUserPasswordProfileMapping
 
 from include.api_connect import connect_to_api
 from include.country_info_to_data_lake import country_info_to_datalake
@@ -28,7 +25,7 @@ DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/dbt/dbt_pipeline"
 profiles_yml = f"{os.environ['AIRFLOW_HOME']}/dags/dbt/dbt_pipeline/profiles.yml"
 
 profile_config = ProfileConfig(
-    profile_name="default",
+    profile_name="dbt_pipeline",
     target_name="dev",
     # profile_mapping=profile
     profiles_yml_filepath=profiles_yml
@@ -56,27 +53,16 @@ default_args = {
     "resource_group_name": "cde_resource"  
 }
 
-  # dbt_dag = DbtDag(
-  #   project_config=ProjectConfig(DBT_PROJECT_PATH),
-  #   operator_args={"install_deps": True},
-  #   profile_config=profile_config,
-  #   # execution_config=execution_config,
-  #   dag_id="dbt_pipeline",
-  #   default_args=default_args
-  # )
-
-  
-
-
-
 
 
 with DAG(dag_id='countries_api', 
          catchup=False, default_args=default_args) as dag: 
 
-  start_task = DummyOperator(task_id='pipeline_start')
+  start = DummyOperator(task_id='pipeline_start')
+  slow_down = DummyOperator(task_id='slow_down')
 
-  end_task = DummyOperator(task_id='pipeline_ends')
+  end = DummyOperator(task_id='pipeline_ends')
+
 
   api_connect = PythonOperator(
     task_id="connect_to_api",
@@ -110,12 +96,24 @@ with DAG(dag_id='countries_api',
     provide_context=True
   )
 
+  create_countries_table = PostgresOperator(
+    sql = "sql/countries.sql",
+    task_id = "create_countries_table",
+    postgres_conn_id = "postgres_conn"
+  )
+  
+  create_language_table = PostgresOperator(
+    sql = "sql/language.sql",
+    task_id = "create_language_table",
+    postgres_conn_id = "postgres_conn"
+  )
+  
   data_factory = AzureDataFactoryRunPipelineOperator(
         task_id="run_data_factory",
-        pipeline_name="df_pipeline",
+        pipeline_name="countries_api_factory",
   )
 
-  dbt_tg = DbtTaskGroup(
+  dbt_dag = DbtTaskGroup(
       group_id="dbt_transform_data",
       project_config=ProjectConfig(DBT_PROJECT_PATH),
       profile_config=profile_config,
@@ -124,12 +122,26 @@ with DAG(dag_id='countries_api',
       default_args=default_args,
   )
 
+#   dbt_dag = DbtDag(
+#     project_config=ProjectConfig(DBT_PROJECT_PATH),
+#     operator_args={"install_deps": True},
+#     profile_config=profile_config,
+#     execution_config=execution_config,
+#     default_args=default_args,
+#     dag_id="dbt_dag"
+# )
 
-  ( start_task 
-  >> api_connect 
-  >> load_2_data_lake 
-  >> transform_data
-  >> [language_2_data_lake, country_info_2_data_lake]
-  >>  data_factory >> dbt_tg >> end_task
+
+  ( 
+    start
+    >> api_connect 
+    >> load_2_data_lake 
+    >> transform_data
+    >> [ language_2_data_lake, country_info_2_data_lake ]
+    >> slow_down
+    >> [ create_countries_table, create_language_table ]
+    >> data_factory
+    >> dbt_dag
+    >> end
   )
   

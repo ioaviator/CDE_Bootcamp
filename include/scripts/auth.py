@@ -1,6 +1,5 @@
 import os
 
-import pandas as pd
 from azure.storage.blob import BlobServiceClient, ContainerClient
 from dotenv import load_dotenv
 

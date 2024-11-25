@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    database: countries_api
+    schema: public
+    tables:
+      - name: countries
+      - name: language
