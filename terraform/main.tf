@@ -50,10 +50,10 @@ module "data_factory_blob_storage" {
   linked_service_name = azurerm_data_factory_linked_service_azure_blob_storage.cdeblobstoragels.name
 }
 
-# module "data_factory_postgres" {
-#   source = "./data_factory_postgres"
-#   data_factory_id = azurerm_data_factory.cdedatafactory.id
-# }
+module "data_factory_postgres" {
+  source = "./data_factory_postgres"
+  data_factory_id = azurerm_data_factory.cdedatafactory.id
+}
 
 
 module "container_registry" {

@@ -5,11 +5,11 @@ variable "data_factory_id" {
 variable "db_admin_login" {
   type = string
   sensitive = true
-  default = "adminad"
+  default = "adminadmin"
 }
 
 variable "db_admin_pass" {
   type = string
   sensitive = true
-  default = "123456/"
+  default = "12345678He/"
 }

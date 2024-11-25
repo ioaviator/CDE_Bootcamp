@@ -24,7 +24,7 @@ resource "azurerm_postgresql_flexible_server" "cdepgserver" {
 }
 
 resource "azurerm_postgresql_flexible_server_database" "cdepgdb" {
-  name      = "cdepgdb22"
+  name      = "countries_api"
   server_id = azurerm_postgresql_flexible_server.cdepgserver.id
   collation = "en_US.utf8"
   charset   = "utf8"
