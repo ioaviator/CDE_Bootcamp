@@ -118,7 +118,7 @@ cd dags/dbt/dbt_pipeline
 dbt init
 
 # Select and configure dbt database credentials. 
-# This project uses dbt-postgres. Make sure to have a running instance of postgresql, on prem or on Azure Cloud. We make use of Azure Cloud
+# This project uses dbt-postgres. Make sure to have a running instance of postgresql, on prem or on Azure Cloud. This project makes use of Azure Cloud
 
 # Running the dbt init command will create a .dbt/profiles.yml file inside your computer user directory 
 
@@ -138,9 +138,9 @@ dbt debug
 
 ### Start the apache airflow services
 ```bash
-    # in the root of the project directory
+    # Navigate into the root of the project directory
     cd CDE_Bootcamp
-     
+
     # Initialize the airflow astro project
     astro dev init
 
