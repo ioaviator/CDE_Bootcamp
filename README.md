@@ -19,9 +19,12 @@ This guide gives instructions on how to setup the project environment and provis
 - Microsoft Power BI
 - Github Actions
 
+### Data Architecture
+![Data Architecture](./_img/cde_project.gif)
+
 ## Usage
 
-## Clone the repository
+### Clone the repository
 
 ```bash
 # clone the project repository
@@ -42,7 +45,7 @@ source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
-## Create secret credentials
+### Create secret credentials
 ```bash
 # In the project root directory, create a .env file and load these variables
 
@@ -50,12 +53,13 @@ ACCOUNT_KEY="key-to-azure-cloud-storage-account"
 URL="url-to-parquet-file-stored-in-cloud-storage"
 ```
 
-# Provision Cloud Infrastructure with Terraform
+### Provision Cloud Infrastructure with Terraform
+(Download the Azure CLI )
 ```bash
-    # Login into Azure
+    # Login into Azure using azure cli
     az login
 ```
-# Get subscription ID from Azure portal
+### Get subscription ID from Azure portal
 From the home portal, search for Subscriptions in the search box.
 Click on the current subscription name, copy the subscription id
 
@@ -76,6 +80,7 @@ subscription_id = file("credentials.txt")
 ```bash
     # Provision all services needed for project
     # Inside the terraform directory
+    
     # initiliaze  
     terraform init
 
@@ -149,6 +154,5 @@ dbt debug
     # This command boots up the services needed to start up the project
 ```
 
-![Data Architecture](./_img/cde_project.gif)
 
 ## Work in progress, 
