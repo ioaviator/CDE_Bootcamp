@@ -7,3 +7,4 @@ astronomer-cosmos
 python-dotenv==1.0.1 
 apache-airflow-providers-microsoft-azure
 apache-airflow-providers-postgres
+dbt-postgres

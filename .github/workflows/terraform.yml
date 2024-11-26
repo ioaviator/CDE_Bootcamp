@@ -10,34 +10,34 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    name: 'terraform-resources'
-    env:
-      TF_VAR_db_admin_login: ${{secrets.ADMIN_LOGIN}}
-      TF_VAR_db_admin_pass: ${{secrets.ADMIN_PASS}}
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    # name: 'terraform-resources'
+    # env:
+    #   TF_VAR_db_admin_login: ${{secrets.ADMIN_LOGIN}}
+    #   TF_VAR_db_admin_pass: ${{secrets.ADMIN_PASS}}
+    #   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    #   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+    #   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
+    #   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    # steps:
+    #   # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    #   - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: 'Terraform init'
-        id: init
-        run: |
-          cd terraform
-          terraform init          
+    #   # Runs a single command using the runners shell
+    #   - name: 'Terraform init'
+    #     id: init
+    #     run: |
+    #       cd terraform
+    #       terraform init          
 
-      - name: 'Terraform plan'
-        id: plan
-        run: |
-          cd terraform
-          terraform plan
+    #   - name: 'Terraform plan'
+    #     id: plan
+    #     run: |
+    #       cd terraform
+    #       terraform plan
                     
-      - name: 'Terraform apply'
-        id: apply
-        run: |
-          cd terraform
-          terraform apply --auto-approve 
+    #   - name: 'Terraform apply'
+    #     id: apply
+    #     run: |
+    #       cd terraform
+    #       terraform apply --auto-approve 
