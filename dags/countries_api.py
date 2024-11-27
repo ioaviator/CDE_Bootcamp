@@ -9,16 +9,20 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.microsoft.azure.operators.data_factory import (
     AzureDataFactoryRunPipelineOperator,
 )
-from cosmos import DbtDag, DbtTaskGroup, ExecutionConfig, ProfileConfig, ProjectConfig
+from cosmos import DbtTaskGroup, ExecutionConfig, ProfileConfig, ProjectConfig
 
-from include.api_connect import connect_to_api
-from include.country_info_to_data_lake import country_info_to_datalake
-from include.language_info_to_data_lake import language_to_datalake
-from include.load_api_to_data_lake import load_to_datalake
-from include.transform_data_from_data_lake import transform_data_from_data_lake
+from include.dag_context.main import (
+    connect_to_api,
+    country_info_to_datalake,
+    language_to_datalake,
+    load_raw_file_to_datalake,
+)
+from include.dag_context.transform_data_from_data_lake import (
+    transform_data_from_data_lake,
+)
 
 sys.path.append(
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), "scripts")
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), "dag_context")
 )
 
 DBT_PROJECT_PATH = f"{os.environ['AIRFLOW_HOME']}/dags/dbt/dbt_pipeline"
@@ -72,7 +76,7 @@ with DAG(dag_id='countries_api',
 
   load_2_data_lake = PythonOperator(
     task_id="load_2_datalake",
-    python_callable=load_to_datalake,
+    python_callable=load_raw_file_to_datalake,
     provide_context=True
   )
 

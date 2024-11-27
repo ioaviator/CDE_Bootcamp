@@ -40,9 +40,6 @@ python -m venv venv
 
 # Activate venv environment
 source venv/Scripts/activate
-
-#Install dependencies
-pip install -r requirements.txt
 ```
 
 ### Create secret credentials
@@ -50,8 +47,14 @@ pip install -r requirements.txt
 # In the project root directory, create a .env file and load these variables
 
 ACCOUNT_KEY="key-to-azure-cloud-storage-account"
-URL="url-to-parquet-file-stored-in-cloud-storage"
+CONN_STRING="url-to-parquet-file-stored-in-cloud-storage"
 ```
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+```
+
 
 ### Provision Cloud Infrastructure with Terraform
 (Download the Azure CLI )
@@ -60,7 +63,7 @@ URL="url-to-parquet-file-stored-in-cloud-storage"
     az login
 ```
 ### Get subscription ID from Azure portal
-From the home portal, search for Subscriptions in the search box.
+From the home portal, search for Subscriptions in the search box and select.
 Click on the current subscription name, copy the subscription id
 
 ```bash
@@ -75,6 +78,8 @@ provider "azurerm" {
 
 subscription_id = file("credentials.txt")
 }
+
+# Always comment out the subscription_id line when you want to push to version control
 ```
 
 ```bash
@@ -136,9 +141,13 @@ dbt init
 ```
 ### Test database connection with DBT debug 
 ```bash
-# RUN dbt debug to make sure your connection to on-prem Postgres or Azure postgresql service is successful
+# RUN `dbt debug` to make sure your connection to on-prem Postgres or Azure postgresql service is successful
 
 dbt debug
+```
+### Run the DBT pipeline standalone
+```bash
+    dbt run
 ```
 
 ### Start the apache airflow services

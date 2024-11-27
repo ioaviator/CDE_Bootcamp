@@ -3,7 +3,7 @@ import pandas as pd
 from .auth import blob_service_client
 
 
-def load_to_data_lake(data):
+def raw_file_to_data_lake(data):
 
   data_df = pd.DataFrame(data)
 
